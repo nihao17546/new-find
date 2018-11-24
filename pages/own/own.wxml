@@ -1,0 +1,23 @@
+<view class="page">
+  <view hidden="{{logined}}">
+    <view class="page__bd">
+      <image class='own-head-view' src='../../images/find.jpg'></image>
+    </view>
+    <view class="page__bd own-login-btn-view">
+      <button class="weui-btn own-login-btn" bindtap="login" type="primary" disabled="{{login_btn_txt != '微信登录'}}">{{login_btn_txt}}</button>
+    </view>
+  </view>
+  <view hidden="{{!logined}}">
+    <view class="page__bd">
+      <view class="weui-flex own-head">
+        <view class="weui-flex__item" bindtap="logout">
+          <image class="own-head-img" src="{{userInfo.headPic}}"></image>
+          <text class="own-nickname">{{userInfo.nickname}}</text>
+        </view>
+        <view class="weui-flex__item">
+
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

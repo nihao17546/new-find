@@ -1,0 +1,19 @@
+.play-head-view{
+  background-color: green;
+  width: 100%;
+  height: 200px;
+}
+.page-view-else{
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 50%;
+}
+.page-view-else-font{
+  font-size: 18px;
+  font-family: 黑体;
+  font-weight: bold;
+}
+.page-view-else-btn{
+  margin-left: 20px;
+}

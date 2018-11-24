@@ -1,0 +1,42 @@
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-search-bar search-view-bar">
+      <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <form bindsubmit="formSubmit">
+            <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{searchContextShow}}" bindinput="inputTyping" bindfocus="bindfocus" bindblur="bindblur" bindconfirm="formSubmit" />
+          </form>
+          <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+            <icon type="clear" size="14"></icon>
+          </view>
+        </view>
+        <label class="weui-search-bar__label" hidden="{{searchContextShow}}" bindtap="showInput">
+          <icon class="weui-icon-search" type="search" size="14"></icon>
+          <view class="weui-search-bar__text">搜索</view>
+        </label>
+      </view>
+      <view class="weui-search-bar__cancel-btn" hidden="{{!searchContextShow}}" bindtap="hideInput">取消</view>
+    </view>
+  </view>
+
+  <view class="top-view" style="display:{{viewDisplay}};" wx:for="{{pics}}">
+    <image class="item" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0"></image>
+    <image class="item" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1"></image>
+    <image class="item" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2"></image>
+  </view>
+
+  <view class="weui-cells searchbar-result search-context" wx:if="{{searchContextShow}}">
+    <view class="search-context-title" wx:if="{{hots.length > 0}}">热门搜索</view>
+    <view class="search-context-content" wx:if="{{hots.length > 0}}">
+      <view wx:for="{{hots}}" wx:for-index="index">
+        <view class="weui-flex search-context-content-view">
+          <view wx:for="{{hots[index]}}" wx:for-item="hotKey">
+            <button class="weui-btn mini-btn weui-flex__item search-context-btn" type="default" size="mini">{{hotKey}}</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

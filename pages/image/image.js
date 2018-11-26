@@ -8,13 +8,15 @@ Page({
    */
   data: {
     searchContextShow: false,
-    inputVal: "",
-    pics: [{
-      path1: 'http://img4.imgtn.bdimg.com/it/u=3294000478,3463074550&fm=26&gp=0.jpg',
-      path2: 'http://img4.imgtn.bdimg.com/it/u=3294000478,3463074550&fm=26&gp=0.jpg',
-      path3: 'http://img4.imgtn.bdimg.com/it/u=3294000478,3463074550&fm=26&gp=0.jpg'
-    }],
-    hots: []
+    inputVal: '',
+    page: 1,
+    totalPage: 1,
+    pics: [],
+    pictures: [],
+    picIds: [],
+    hots: [],
+    openPic: true,
+    searchPlaceholder: '搜索'
   },
 
   /**
@@ -28,7 +30,8 @@ Page({
         }
       }, () => {
 
-      })
+      });
+    this.randomImage()
   },
 
   /**
@@ -42,7 +45,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    
+
   },
 
   /**
@@ -60,17 +63,36 @@ Page({
   },
 
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
+    let nextPage = this.data.page + 1;
+    if (this.data.inputVal.length > 0 && nextPage < this.data.totalPage) {
+      let url = config.httpUrls.query + '/' + encodeURI(this.data.inputVal) + '/' + nextPage + '/15';
+      call.doGet(url, {},
+        data => {
+          if (data.code == config.httpStatus.OK) {
+            if (data.response.length > 0) {
+              let result = this.fillImages(data.response)
+              this.setData({
+                pics: result.pics,
+                pictures: result.pictures,
+                picIds: result.picIds,
+                totalPage: data.totalPage,
+                page: nextPage
+              })
+            }
+          } else {
 
+          }
+          this.setData({
+            searchContextShow: false
+          });
+          wx.hideLoading()
+        }, () => {
+          wx.hideLoading()
+        })
+    }
   },
 
   /**
@@ -84,11 +106,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    console.log('下拉');
-    setTimeout(function() {
-      console.log('停止下拉');
-      wx.stopPullDownRefresh()
-    }, 1000)
+    this.hideInput()
+    this.randomImage()
   },
 
   showInput: function() {
@@ -125,7 +144,41 @@ Page({
   bindblur: function(e) {},
 
   formSubmit: function(e) {
-    console.log('submit:' + this.data.inputVal)
+    if (this.data.inputVal.length > 0) {
+      wx.showLoading({
+        title: '加载中',
+      })
+      this.setData({
+        page: 1,
+        totalPage: 1,
+        pics: [],
+        pictures: [],
+        picIds: []
+      })
+      let url = config.httpUrls.query + '/' + encodeURI(this.data.inputVal) + '/' + this.data.page + '/15';
+      call.doGet(url, {},
+        data => {
+          if (data.code == config.httpStatus.OK) {
+            if (data.response.length > 0) {
+              let result = this.fillImages(data.response)
+              this.setData({
+                pics: result.pics,
+                pictures: result.pictures,
+                picIds: result.picIds,
+                totalPage: data.totalPage
+              })
+            }
+          } else {
+
+          }
+          this.setData({
+            searchContextShow: false
+          });
+          wx.hideLoading()
+        }, () => {
+          wx.hideLoading()
+        })
+    }
   },
 
   getLength: function strlen(str) {
@@ -142,7 +195,7 @@ Page({
     return len;
   },
 
-  initHots: function (hotKeys) {
+  initHots: function(hotKeys) {
     let hotss = [];
     let length = 0;
     let hotLine = [];
@@ -162,5 +215,97 @@ Page({
     this.setData({
       hots: hotss
     })
+  },
+
+  fillImages: function(images) {
+    let p1 = [],
+      p2 = [],
+      p3 = [],
+      p = [];
+    let pp = [],
+      ids = [];
+    for (let i = 0; i < images.length; i++) {
+      let cs;
+      let ss = images[i].src;
+      if (images[i].compressSrc) {
+        cs = images[i].compressSrc;
+      } else {
+        cs = images[i].src;
+      }
+      if (i % 3 == 0) {
+        p1.push(cs);
+      } else if (i % 3 == 1) {
+        p2.push(cs);
+      } else {
+        p3.push(cs);
+      }
+      pp.push(ss);
+      ids.push(images[i].id);
+    }
+    let len = Math.max(p1.length, p2.length, p3.length)
+    for (let i = 0; i < len; i++) {
+      var obj = {};
+      if (typeof(p1[i]) != "undefined") {
+        obj.path1 = p1[i];
+      }
+      if (typeof(p2[i]) != "undefined") {
+        obj.path2 = p2[i];
+      }
+      if (typeof(p3[i]) != "undefined") {
+        obj.path3 = p3[i];
+      }
+      p.push(obj);
+    }
+    let result = {
+      pics: p,
+      pictures: pp,
+      picIds: ids
+    }
+    return result;
+  },
+
+  randomImage: function() {
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.setData({
+      page: 1,
+      totalPage: 1,
+      inputVal: '',
+      pics: [],
+      pictures: [],
+      picIds: []
+    })
+    call.doGet(config.httpUrls.random, {},
+      data => {
+        if (data.code == config.httpStatus.OK) {
+          if (data.response.length > 0) {
+            let result = this.fillImages(data.response)
+            this.setData({
+              pics: result.pics,
+              pictures: result.pictures,
+              picIds: result.picIds
+            })
+          }
+        } else {
+
+        }
+        wx.hideLoading()
+      }, () => {
+        wx.hideLoading()
+      })
+  },
+
+  showPic: function(e) {
+    var index = parseInt(e.currentTarget.dataset.index),
+      pa = parseInt(e.currentTarget.dataset.pa),
+      pictures = this.data.pictures;
+    var ind = index * 3 + pa;
+    if (ind < pictures.length) {
+      wx.previewImage({
+        current: pictures[ind],
+        urls: pictures
+      })
+    }
   }
 })

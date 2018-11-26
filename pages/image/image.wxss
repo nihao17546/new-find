@@ -28,7 +28,7 @@
   position: absolute;
   top: 30px;
   width: 100%;
-  border-bottom: 1px solid gray;
+  border-bottom: 0px solid gray;
 }
 .search-view-bar{
   background-color: white;

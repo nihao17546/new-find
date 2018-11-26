@@ -13,17 +13,17 @@
         </view>
         <label class="weui-search-bar__label" hidden="{{searchContextShow}}" bindtap="showInput">
           <icon class="weui-icon-search" type="search" size="14"></icon>
-          <view class="weui-search-bar__text">搜索</view>
+          <view class="weui-search-bar__text">{{searchPlaceholder}}</view>
         </label>
       </view>
       <view class="weui-search-bar__cancel-btn" hidden="{{!searchContextShow}}" bindtap="hideInput">取消</view>
     </view>
   </view>
 
-  <view class="top-view" style="display:{{viewDisplay}};" wx:for="{{pics}}">
-    <image class="item" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0"></image>
-    <image class="item" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1"></image>
-    <image class="item" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2"></image>
+  <view class="top-view" hidden="{{searchContextShow}}" wx:for="{{pics}}">
+    <image class="item" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0" bindtap="showPic"></image>
+    <image class="item" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showPic"></image>
+    <image class="item" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2" bindtap="showPic"></image>
   </view>
 
   <view class="weui-cells searchbar-result search-context" wx:if="{{searchContextShow}}">

@@ -1,10 +1,12 @@
-const basePath = 'http://192.168.129.250:8080';
+const basePath = 'http://192.168.0.103:8080';
 const httpUrls = {
   login: basePath + '/user/login',
   auth: basePath + '/user/auth',
   hot: basePath + '/hot/list',
   random: basePath + '/image/random',
-  query: basePath + '/image'
+  query: basePath + '/image',
+  look: basePath + '/draw/look',
+  face: basePath + '/draw/face'
 }
 const staticResources = {
   play_head_img: 'http://activity.appcnd.com/paly.jpg'

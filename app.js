@@ -9,7 +9,7 @@ App({
     this.login()
   },
 
-  login: function(doSuccess, doFail, openSetting) {
+  login: function(successFun, failFun) {
     wx.getStorage({
       key: 'token',
       success: res => {
@@ -22,21 +22,21 @@ App({
               key: 'token',
               data: data.response.token,
             })
-            if (doSuccess) {
-              doSuccess()
+            if (successFun) {
+              successFun()
             }
           } else {
             wx.removeStorage({
               key: 'token'
             })
-            if (doFail) {
-              doFail()
+            if (failFun) {
+              failFun()
             }
             this.alert('服务异常', data.message)
           }
         }, () => {
-          if (doFail) {
-            doFail()
+          if (failFun) {
+            failFun()
           }
           this.alert()
         })
@@ -60,18 +60,18 @@ App({
                                 key: 'token',
                                 data: data.response.token,
                               })
-                              if (doSuccess) {
-                                doSuccess()
+                              if (successFun) {
+                                successFun()
                               }
                             } else {
-                              if (doFail) {
-                                doFail()
+                              if (failFun) {
+                                failFun()
                               }
                               this.alert('服务异常', data.message)
                             }
                           }, () => {
-                            if (doFail) {
-                              doFail()
+                            if (failFun) {
+                              failFun()
                             }
                             this.alert()
                           })
@@ -81,19 +81,26 @@ App({
                       }
                     })
                   } else {
-                    if (openSetting) {
-                      openSetting()
-                    } else {
-                      this.alert('登录失败', '获取授权信息失败')
+                    wx.showToast({
+                      title: '获取授权信息失败',
+                      icon: 'none',
+                      duration: 1500
+                    })
+                    if (failFun) {
+                      failFun()
                     }
                   }
                 }
               })
             } else {
-              if (doFail) {
-                doFail()
+              wx.showToast({
+                title: '登录失败:' + resLogin.errMsg,
+                icon: 'none',
+                duration: 1500
+              })
+              if (failFun) {
+                failFun()
               }
-              this.alert('登录失败', resLogin.errMsg)
             }
           }
         })

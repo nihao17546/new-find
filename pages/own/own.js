@@ -78,33 +78,34 @@ Page({
 
   },
 
-  login: function() {
+  login: function(e) {
     this.setData({
       login_btn_txt: '登录中...'
     })
-    app.login(() => {
+    if (e.detail.userInfo) {
+      app.login(() => {
+        this.setData({
+          login_btn_txt: '已登录',
+          logined: true,
+          userInfo: app.globalData.userInfo
+        })
+      }, () => {
+        this.setData({
+          login_btn_txt: '微信登录',
+          logined: false,
+          userInfo: {}
+        })
+      })
+    } else {
+      wx.showToast({
+        title: '获取授权信息失败',
+        icon: 'none',
+        duration: 1500
+      })
       this.setData({
-        login_btn_txt: '已登录',
-        logined: true,
-        userInfo: app.globalData.userInfo
+        login_btn_txt: '微信登录'
       })
-    }, () => {
-      this.setData({
-        login_btn_txt: '微信登录',
-        logined: false,
-        userInfo: {}
-      })
-    }, () => {
-      wx.openSetting({
-        success: (data) => {
-          if (data.authSetting["scope.userInfo"] == true) {
-            this.login()
-          } else {
-            app.alert('登录失败', '获取授权信息失败')
-          }
-        }
-      })
-    })
+    }
   },
 
   logout: function() {

@@ -4,7 +4,7 @@
       <image class='own-head-view' src='../../images/find.jpg'></image>
     </view>
     <view class="page__bd own-login-btn-view">
-      <button class="weui-btn own-login-btn" bindtap="login" type="primary" disabled="{{login_btn_txt != '微信登录'}}">{{login_btn_txt}}</button>
+      <button class="weui-btn own-login-btn" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="login" type="primary" disabled="{{login_btn_txt != '微信登录'}}">{{login_btn_txt}}</button>
     </view>
   </view>
   <view hidden="{{!logined}}">

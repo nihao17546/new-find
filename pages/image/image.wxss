@@ -26,17 +26,17 @@
 }
 .search-context{
   position: absolute;
-  top: 30px;
+  top: 35px;
   width: 100%;
   border-bottom: 0px solid gray;
 }
 .search-view-bar{
-  background-color: white;
-  border: 0px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  padding-left: 3px;
-  padding-right: 3px;
+  /* background-color: white;
+  border: 0px; */
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 .search-context-title{
   font-size: 13px;
@@ -46,8 +46,8 @@
   margin-left: 10px;
 }
 .search-context-content{
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   margin-bottom: 8px;
 }
 .search-context-btn{

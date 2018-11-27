@@ -32,7 +32,7 @@
       <view wx:for="{{hots}}" wx:for-index="index">
         <view class="weui-flex search-context-content-view">
           <view wx:for="{{hots[index]}}" wx:for-item="hotKey">
-            <button class="weui-btn mini-btn weui-flex__item search-context-btn" type="default" size="mini">{{hotKey}}</button>
+            <button class="weui-btn mini-btn weui-flex__item search-context-btn" type="default" size="mini" bindtap="searchHot" data-key="{{hotKey}}">{{hotKey}}</button>
           </view>
         </view>
       </view>

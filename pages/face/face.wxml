@@ -1,0 +1,8 @@
+<view class="page">
+  <view class='page__bd face-head'>
+    <image class='face-head-view' src='{{ defaultPic }}'></image>
+  </view>
+  <view class='page__bd face-head'>
+    <button type="primary" class="weui-btn face-head-btn" size="mini">{{btnHtml}}</button>
+  </view>
+</view>

@@ -38,7 +38,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
   },
 
   /**
@@ -68,17 +67,28 @@ Page({
   onReachBottom: function () {
     let nextPage = this.data.page + 1;
     if (this.data.inputVal.length > 0 && nextPage < this.data.totalPage) {
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      })
       let url = config.httpUrls.query + '/' + encodeURI(this.data.inputVal) + '/' + nextPage + '/15';
       call.doGet(url, {},
         data => {
           if (data.code == config.httpStatus.OK) {
             if (data.response.length > 0) {
               let result = this.fillImages(data.response)
+              if (result.pics && result.pics.length > 0) {
+                let pics = this.data.pics.concat(result.pics);
+                let pictures = this.data.pictures.concat(result.pictures);;
+                let picIds = this.data.picIds.concat(result.picIds);;
+                this.setData({
+                  pics: pics,
+                  pictures: pictures,
+                  picIds: picIds
+                })
+              }
               this.setData({
-                pics: result.pics,
-                pictures: result.pictures,
-                picIds: result.picIds,
-                totalPage: data.totalPage,
+                totalPage: data.pageCount,
                 page: nextPage
               })
             }
@@ -107,7 +117,9 @@ Page({
    */
   onPullDownRefresh: function() {
     this.hideInput()
-    this.randomImage()
+    this.randomImage(()=>{
+      wx.stopPullDownRefresh()
+    })
   },
 
   showInput: function() {
@@ -119,6 +131,7 @@ Page({
   hideInput: function() {
     this.setData({
       inputVal: "",
+      searchPlaceholder: "搜索",
       searchContextShow: false
     });
   },
@@ -147,6 +160,7 @@ Page({
     if (this.data.inputVal.length > 0) {
       wx.showLoading({
         title: '加载中',
+        mask: true
       })
       this.setData({
         page: 1,
@@ -159,13 +173,20 @@ Page({
       call.doGet(url, {},
         data => {
           if (data.code == config.httpStatus.OK) {
+            let placeholder = this.data.inputVal + ' 相关图片' + data.recordCount + '张';
+            if (this.data.inputVal.length > 10) {
+              placeholder = this.data.inputVal.substring(0, 9) + '... 相关图片' + data.recordCount + '张';
+            }
+            this.setData({
+              searchPlaceholder: placeholder
+            })
             if (data.response.length > 0) {
               let result = this.fillImages(data.response)
               this.setData({
                 pics: result.pics,
                 pictures: result.pictures,
                 picIds: result.picIds,
-                totalPage: data.totalPage
+                totalPage: data.pageCount,
               })
             }
           } else {
@@ -201,7 +222,7 @@ Page({
     let hotLine = [];
     hotKeys.forEach(hotKey => {
       let len = this.getLength(hotKey) + 2;
-      if (length + len > 31) {
+      if (length + len > 30) {
         hotss.push(hotLine);
         length = 0;
         hotLine = [];
@@ -264,9 +285,10 @@ Page({
     return result;
   },
 
-  randomImage: function() {
+  randomImage: function(callback) {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     this.setData({
       page: 1,
@@ -290,8 +312,14 @@ Page({
         } else {
 
         }
+        if (callback) {
+          callback()
+        }
         wx.hideLoading()
       }, () => {
+        if (callback) {
+          callback()
+        }
         wx.hideLoading()
       })
   },
@@ -306,6 +334,15 @@ Page({
         current: pictures[ind],
         urls: pictures
       })
+    }
+  },
+
+  searchHot: function(e) {
+    if (e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.key) {
+      this.setData({
+        inputVal: e.currentTarget.dataset.key
+      })
+      this.formSubmit()
     }
   }
 })

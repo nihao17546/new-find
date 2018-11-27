@@ -26,7 +26,9 @@ App({
               doSuccess()
             }
           } else {
-            wx.clearStorage()
+            wx.removeStorage({
+              key: 'token'
+            })
             if (doFail) {
               doFail()
             }

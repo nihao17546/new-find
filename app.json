@@ -2,7 +2,8 @@
   "pages":[
     "pages/image/image",
     "pages/play/play",
-    "pages/own/own"
+    "pages/own/own",
+    "pages/face/face"
   ],
   "window":{
     "backgroundTextStyle":"light",

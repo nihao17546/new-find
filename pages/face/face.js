@@ -1,28 +1,26 @@
-var app = getApp();
-const config = require('../../utils/config.js');
+// pages/face/face.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    play_head: ''
+    defaultPic: 'http://mydata.appcnd.com/tou.png',
+    btnHtml: '上传人脸照片'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(config)
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.setData({
-      play_head: config.staticResources.play_head_img
-    })
+
   },
 
   /**
@@ -65,11 +63,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-
-  toFace: function () {
-    wx.navigateTo({
-      url: '/pages/face/face'
-    })
   }
 })

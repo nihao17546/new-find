@@ -116,7 +116,9 @@ Page({
           logined: false,
           userInfo: {}
         });
-        wx.clearStorage()
+        wx.removeStorage({
+          key: 'token'
+        })
       })
   }
 })

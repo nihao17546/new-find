@@ -1,0 +1,11 @@
+.face-head{
+  text-align: center;
+}
+.face-head-view {
+  background-color: green;
+  width: 80%;
+  border: 1px solid gray;
+}
+.face-head-btn{
+  width: 70%;
+}

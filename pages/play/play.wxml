@@ -8,7 +8,7 @@
   </view>
 
   <view class='page__bd page-view-else'>
-    <button class="weui-btn page-view-else-btn" type="primary" plain="true">表情制作</button>
+    <button class="weui-btn page-view-else-btn" type="primary" plain="true" size="mini">表情制作</button>
   </view>
 
   <view class='page__bd page-view-else'>
@@ -16,7 +16,7 @@
   </view>
 
   <view class='page__bd page-view-else'>
-    <button class="weui-btn page-view-else-btn" type="warn" plain="true">人脸识别</button>
+    <button class="weui-btn page-view-else-btn" bindtap="toFace" type="warn" plain="true" size="mini">人脸识别</button>
   </view>
 
 </view>

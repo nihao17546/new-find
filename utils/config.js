@@ -1,4 +1,4 @@
-const basePath = 'http://192.168.0.103:8080';
+const basePath = 'http://127.0.0.1:8080';
 const httpUrls = {
   login: basePath + '/user/login',
   auth: basePath + '/user/auth',

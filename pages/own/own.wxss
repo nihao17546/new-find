@@ -53,19 +53,18 @@
   background-color: white;
   border-top: 1rpx solid #ccc;
 }
-
-.top-view{
-  background-color: white;
-  width: 100%;
-  color: white;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+.messgae-title{
+  font-size: 13px;
+  margin-bottom: 5px;
 }
-.image_item{
-  flex:0 0 32%;
-  height: 150px;
-  margin: 0px;
-  padding: 2px;
+.messgae-content{
+  font-size: 12px;
+  color: gray;
+}
+.message-head-pic{
+  width: 45px;
+  height: 45px;
+  margin-right: 8px;
+  margin-bottom: 0px;
+  border-radius: 50px;
 }

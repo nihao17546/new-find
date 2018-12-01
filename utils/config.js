@@ -10,6 +10,7 @@ const httpUrls = {
   favePics: basePath + '/image/fave',
   rmFavo: basePath + '/user/rmFavo',
   insertFavo: basePath + '/user/favo',
+  messageList: basePath + '/message/list'
 }
 const staticResources = {
   play_head_img: 'http://activity.appcnd.com/paly.jpg'

@@ -1,11 +1,40 @@
-.face-head{
+.face-head {
   text-align: center;
 }
+
 .face-head-view {
-  background-color: green;
-  width: 80%;
-  border: 1px solid gray;
+  border: 0px solid gray;
 }
-.face-head-btn{
+
+.face-head-btn {
   width: 70%;
+}
+
+.result-view {
+  margin-top: 5px;
+}
+
+.view-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.view-title-a {
+  font-size: 14px;
+}
+
+.btn-view {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.result-desc {
+  color: #999;
+  font-size: 13px;
+  line-height: 1.2;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+  /* display: -webkit-box; */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }

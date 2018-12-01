@@ -1,8 +1,19 @@
 <view class="page">
   <view class='page__bd face-head'>
-    <image class='face-head-view' src='{{ defaultPic }}'></image>
+    <canvas canvas-id='myCanvas' class='face-head-view' style='width:{{canvasWidth}}px;height:{{canvasHeight}}px'></canvas>
   </view>
-  <view class='page__bd face-head'>
+  <view class='page__bd result-view' hidden="{{faces.length == 0}}">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">识别结果</view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text" wx:for="{{faces}}" wx:key="item">
+          <view class="weui-media-box__title weui-media-box__title_in-text" hidden="{{faces.length < 2}}">{{item.num}}</view>
+          <view class="result-desc">{{item.description}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='page__bd face-head btn-view'>
     <button type="primary" open-type="getUserInfo" lang="zh_CN" class="weui-btn face-head-btn" bindgetuserinfo="chooseFacePic" size="mini">{{btnHtml}}</button>
   </view>
 </view>

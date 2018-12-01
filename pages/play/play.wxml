@@ -12,11 +12,11 @@
   </view>
 
   <view class='page__bd page-view-else'>
-    <text class='page-view-else-font'>人脸识别</text>
+    <text class='page-view-else-font'>图像识别</text>
   </view>
 
   <view class='page__bd page-view-else'>
-    <button class="weui-btn page-view-else-btn" bindtap="toFace" type="warn" plain="true" size="mini">人脸识别</button>
+    <button class="weui-btn page-view-else-btn" bindtap="toFace" type="warn" plain="true" size="mini">人脸检测</button>
   </view>
 
 </view>

@@ -1,28 +1,39 @@
-var app = getApp();
 const config = require('../../utils/config.js');
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    play_head: ''
+    windowWidth: '',
+    windowHeight: '',
+    image_width: '',
+    image_height: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    wx.getSystemInfo({
+      success: res => {
+        this.setData({ //设置宽高为屏幕宽，高为屏幕高减去50 
+          windowWidth: res.windowWidth,
+          windowHeight: res.windowHeight,
+          canvasWidth: res.windowWidth,
+          image_width: res.windowWidth * 0.7,
+          image_height: res.windowWidth * 0.7
+        })
+      },
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.setData({
-      play_head: config.staticResources.play_head_img
-    })
+
   },
 
   /**
@@ -65,22 +76,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-
-  toFace: function () {
-    wx.navigateTo({
-      url: '/pages/face/face'
-    })
-  },
-
-  toLook: function () {
-    wx.showToast({
-      title: '该功能即将上线，尽请期待！',
-      icon: 'none',
-      duration: 1000
-    })
-    // wx.navigateTo({
-    //   url: '/pages/look/look'
-    // })
   }
 })

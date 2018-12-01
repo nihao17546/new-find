@@ -21,9 +21,9 @@
   </view>
 
   <view class="top-view" hidden="{{searchContextShow}}" wx:for="{{pics}}" wx:key="item">
-    <image class="item" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0" bindtap="showPic"></image>
-    <image class="item" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showPic"></image>
-    <image class="item" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2" bindtap="showPic"></image>
+    <image class="item" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0" bindtap="showPic" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd"></image>
+    <image class="item" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showPic" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd"></image>
+    <image class="item" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2" bindtap="showPic" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd"></image>
   </view>
 
   <view class="weui-cells searchbar-result search-context" wx:if="{{searchContextShow}}">

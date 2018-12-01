@@ -6,7 +6,10 @@ const httpUrls = {
   random: basePath + '/image/random',
   query: basePath + '/image',
   look: basePath + '/draw/look',
-  face: basePath + '/draw/face'
+  face: basePath + '/draw/face',
+  favePics: basePath + '/image/fave',
+  rmFavo: basePath + '/user/rmFavo',
+  insertFavo: basePath + '/user/favo',
 }
 const staticResources = {
   play_head_img: 'http://activity.appcnd.com/paly.jpg'

@@ -23,6 +23,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    wx.showLoading({
+      title: '',
+      mask: true
+    })
     wx.getSystemInfo({
       success: res => {
         this.setData({ //设置宽高为屏幕宽，高为屏幕高减去50 
@@ -42,6 +46,7 @@ Page({
     ctx.drawImage('../../images/face.jpg', this.data.image_left, this.data.image_top,
       this.data.image_show_width, this.data.canvasHeight);
     ctx.draw();
+    wx.hideLoading()
   },
 
   /**
@@ -96,6 +101,10 @@ Page({
   },
 
   chooseFacePic: function(e) {
+    wx.showLoading({
+      title: '处理中',
+      mask: true
+    })
     if (e.detail.userInfo) {
       app.login(() => {
         wx.chooseImage({
@@ -103,10 +112,6 @@ Page({
           sizeType: ['original', 'compressed'],
           sourceType: ['album', 'camera'],
           success: res=>{
-            wx.showLoading({
-              title: '处理中',
-              mask: true
-            })
             this.setData({
               faces: []
             })
@@ -123,16 +128,20 @@ Page({
                   app.alert('服务异常', '抱歉服务异常，请稍后再试！')
                 } else {
                   let response = JSON.parse(resUpload.data);
-                  if (response.code != 200) {
-                    wx.hideLoading()
-                    app.alert('处理异常', '抱歉图片处理异常，异常信息:' + response.message)
-                  }
-                  else {
+                  if (response.code == 200) {
                     this.drawPic(response.response, res.tempFilePaths[0]);
                     this.setData({
                       faces: response.response.faces
                     })
                     wx.hideLoading()
+                  }
+                  else {
+                    wx.hideLoading()
+                    wx.showToast({
+                      title: response.message,
+                      icon: 'none',
+                      duration: 3000
+                    })
                   }
                 }
               },
@@ -141,13 +150,21 @@ Page({
                 app.alert('服务异常', '抱歉服务异常，异常信息:' + resUpload.errMsg)
               }
             })
+          },
+          fail: res=>{
+            wx.hideLoading()
           }
         })
       }, () => {
-
+        wx.hideLoading()
       })
     } else {
-      app.alert('获取微信授权信息失败', '请登录后体验此功能！')
+      wx.hideLoading()
+      wx.showToast({
+        title: '获取微信授权信息失败,请登录后体验此功能！',
+        icon: 'none',
+        duration: 3000
+      })
     }
   },
 
@@ -199,11 +216,7 @@ Page({
       })
     }
     else{
-      wx.showToast({
-        title: '照片中未识别出人物头像',
-        icon: 'none',
-        duration: 1500
-      })
+      app.alert('糟糕','该照片中未识别出人物头像!');
     }
     ctx.draw();
   }

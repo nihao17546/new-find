@@ -1,23 +1,71 @@
 <view class="page">
   <view hidden="{{logined}}">
     <view class="page__bd">
-      <image class='own-head-view' src='../../images/find.jpg'></image>
+      <image class='own-head-view' src='../../images/find.png'></image>
     </view>
     <view class="page__bd own-login-btn-view">
       <button class="weui-btn own-login-btn" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="login" type="primary" disabled="{{login_btn_txt != '微信登录'}}">{{login_btn_txt}}</button>
     </view>
   </view>
+
   <view hidden="{{!logined}}">
     <view class="page__bd">
-      <view class="weui-flex own-head">
-        <view class="weui-flex__item" bindtap="logout">
-          <image class="own-head-img" src="{{userInfo.headPic}}"></image>
-          <text class="own-nickname">{{userInfo.nickname}}</text>
+      <view class="my_head_back">
+        <view class="item head_pic_item">
+          <image class="head_pic" src="{{userInfo.headPic}}"></image>
         </view>
-        <view class="weui-flex__item">
-
+        <view class="item nickname_item">{{userInfo.nickname}}</view>
+        <view class="item caozuo_item">
+          <text bindtouchend="logout">退出</text>
         </view>
       </view>
     </view>
+
+    <view class="page__bd">
+      <view class="weui-tab">
+        <view class="weui-navbar view-navbar" style='position: {{navbar_position}};top:{{navbar_top}}px;'>
+          <block wx:for="{{tabs}}" wx:key="*this">
+            <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+              <view class="weui-navbar__title">{{item}}</view>
+            </view>
+          </block>
+          <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+        </view>
+        <view class="weui-tab__panel">
+          <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+            <view class="top-view" wx:for="{{fave.pics}}" wx:key="item">
+              <image class="image_item" src="{{item.path1}}" mode="aspectFill" data-index="{{index}}" data-pa="0" bindtap="showFavePic" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd"></image>
+              <image class="image_item" src="{{item.path2}}" mode="aspectFill" data-index="{{index}}" data-pa="1" bindtap="showFavePic" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd"></image>
+              <image class="image_item" src="{{item.path3}}" mode="aspectFill" data-index="{{index}}" data-pa="2" bindtap="showFavePic" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd"></image>
+            </view>
+          </view>
+          <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+            <view class="weui-panel weui-panel_access">
+              <view class="weui-panel__bd">
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                    <image class="weui-media-box__thumb" src="../../images/face.jpg" />
+                  </view>
+                  <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                    <view class="weui-media-box__title">标题一</view>
+                    <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
+                  </view>
+                </navigator>
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                    <image class="weui-media-box__thumb" src="../../images/face.jpg" />
+                  </view>
+                  <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                    <view class="weui-media-box__title">标题二</view>
+                    <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
+                  </view>
+                </navigator>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
   </view>
 </view>

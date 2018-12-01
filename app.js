@@ -2,14 +2,15 @@ const config = require('utils/config.js');
 const call = require("utils/request.js")
 App({
   globalData: {
-    userInfo: {}
+    userInfo: {},
+    hasNewFave: false
   },
 
   onLaunch: function() {
-    this.login()
+    this.login(undefined, undefined, true)
   },
 
-  login: function(successFun, failFun) {
+  login: function(successFun, failFun, isFirst) {
     wx.getStorage({
       key: 'token',
       success: res => {
@@ -43,6 +44,9 @@ App({
       },
       fail: () => {
         this.globalData.userInfo = {};
+        if (isFirst) {
+          return;
+        }
         wx.login({
           success: resLogin => {
             if (resLogin.code) {

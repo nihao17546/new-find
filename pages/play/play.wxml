@@ -8,7 +8,7 @@
   </view>
 
   <view class='page__bd page-view-else'>
-    <button class="weui-btn page-view-else-btn" type="primary" plain="true" size="mini">表情制作</button>
+    <button class="weui-btn page-view-else-btn" bindtap="toLook" type="primary" plain="true" size="mini">表情制作</button>
   </view>
 
   <view class='page__bd page-view-else'>
@@ -19,4 +19,7 @@
     <button class="weui-btn page-view-else-btn" bindtap="toFace" type="warn" plain="true" size="mini">人脸检测</button>
   </view>
 
+  <view class="weui-footer weui-footer_fixed-bottom">
+    <view class="weui-footer__text">Copyright © 2017-2019 appcnd.com</view>
+  </view>
 </view>

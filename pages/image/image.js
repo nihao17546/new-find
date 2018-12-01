@@ -15,7 +15,6 @@ Page({
     pictures: [],
     picIds: [],
     hots: [],
-    openPic: true,
     searchPlaceholder: '搜索'
   },
 
@@ -37,8 +36,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
-  },
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -64,9 +62,9 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
     let nextPage = this.data.page + 1;
-    if (this.data.inputVal.length > 0 && nextPage < this.data.totalPage) {
+    if (this.data.inputVal.length > 0 && nextPage <= this.data.totalPage) {
       wx.showLoading({
         title: '加载中',
         mask: true
@@ -117,7 +115,7 @@ Page({
    */
   onPullDownRefresh: function() {
     this.hideInput()
-    this.randomImage(()=>{
+    this.randomImage(() => {
       wx.stopPullDownRefresh()
     })
   },
@@ -325,15 +323,20 @@ Page({
   },
 
   showPic: function(e) {
-    var index = parseInt(e.currentTarget.dataset.index),
-      pa = parseInt(e.currentTarget.dataset.pa),
-      pictures = this.data.pictures;
-    var ind = index * 3 + pa;
-    if (ind < pictures.length) {
-      wx.previewImage({
-        current: pictures[ind],
-        urls: pictures
-      })
+    if (this.endTime - this.startTime < 350) {
+      var index = parseInt(e.currentTarget.dataset.index),
+        pa = parseInt(e.currentTarget.dataset.pa),
+        pictures = this.data.pictures;
+      var ind = index * 3 + pa;
+      if (ind < pictures.length) {
+        wx.previewImage({
+          current: pictures[ind],
+          urls: pictures
+        })
+      }
+    }
+    else {
+      this.favoPic(e)
     }
   },
 
@@ -344,5 +347,51 @@ Page({
       })
       this.formSubmit()
     }
+  },
+
+  favoPic: function(e) {
+    app.confirm('收藏', '确认收藏该图片？',
+      () => {
+        wx.showLoading({
+          title: '',
+          mask: true
+        })
+        let index = parseInt(e.currentTarget.dataset.index),
+          pa = parseInt(e.currentTarget.dataset.pa);
+        let ind = index * 3 + pa;
+        call.doGet(config.httpUrls.insertFavo, {
+          picId: this.data.picIds[ind]
+        }, data => {
+          wx.hideLoading()
+          if (data.code == 200) {
+            wx.showToast({
+              title: data.message,
+              duration: 2000
+            })
+            if (data.message == '收藏成功') {
+              app.globalData.hasNewFavo = true;
+            }
+          } else {
+            wx.showToast({
+              title: data.message,
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        }, () => {
+          wx.hideLoading()
+        }, {
+          token: app.globalData.userInfo.token
+        })
+      }, () => {
+      })
+  },
+
+  bindTouchStart: function(e) {
+    this.startTime = e.timeStamp;
+  },
+
+  bindTouchEnd: function(e) {
+    this.endTime = e.timeStamp;
   }
 })

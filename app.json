@@ -3,7 +3,8 @@
     "pages/image/image",
     "pages/play/play",
     "pages/own/own",
-    "pages/face/face"
+    "pages/face/face",
+    "pages/look/look"
   ],
   "window":{
     "backgroundTextStyle":"light",

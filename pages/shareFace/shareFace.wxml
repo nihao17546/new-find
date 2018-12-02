@@ -1,0 +1,30 @@
+<view class="page">
+  <view class='page__bd' hidden="{{!result || !result.face || !result.face.faces || result.face.faces.length == 0}}">
+    <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+      <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+        <image class="weui-media-box__thumb" src="{{result.headPic}}" />
+      </view>
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__title">{{result.userName}}</view>
+        <view class="weui-media-box__desc">{{result.face.shareMsg}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='page__bd face-head'>
+    <canvas canvas-id='myCanvas' class='face-head-view' style='width:{{canvasWidth}}px;height:{{canvasHeight}}px'></canvas>
+  </view>
+  <view class='page__bd result-view' hidden="{{!result || !result.face || !result.face.faces || result.face.faces.length == 0}}">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">识别结果</view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text" wx:for="{{result.face.faces}}" wx:key="item">
+          <view class="weui-media-box__title weui-media-box__title_in-text" hidden="{{result.face.faces.length < 2}}">{{item.num}}</view>
+          <view class="result-desc">{{item.description}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='page__bd face-head btn-view'>
+    <button type="primary" class="weui-btn face-head-btn" bindtap="fun" size="mini">我也要玩</button>
+  </view>
+</view>

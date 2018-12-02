@@ -79,8 +79,6 @@ Page({
       icon: 'none',
       duration: 1000
     })
-    // wx.navigateTo({
-    //   url: '/pages/look/look'
-    // })
+    
   }
 })

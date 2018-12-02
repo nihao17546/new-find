@@ -15,7 +15,8 @@ Page({
     pictures: [],
     picIds: [],
     hots: [],
-    searchPlaceholder: '搜索'
+    searchPlaceholder: '搜索',
+    flushBtnDisabled: false
   },
 
   /**
@@ -363,7 +364,7 @@ Page({
           picId: this.data.picIds[ind]
         }, data => {
           wx.hideLoading()
-          if (data.code == 200) {
+          if (data.code == config.httpStatus.OK) {
             wx.showToast({
               title: data.message,
               duration: 2000
@@ -393,5 +394,17 @@ Page({
 
   bindTouchEnd: function(e) {
     this.endTime = e.timeStamp;
+  },
+
+  flush: function(e) {
+    this.setData({
+      flushBtnDisabled: true
+    })
+    this.hideInput();
+    this.randomImage(() => {
+      this.setData({
+        flushBtnDisabled: false
+      })
+    })
   }
 })

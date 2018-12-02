@@ -1,5 +1,4 @@
 .own-head-view{
-  background-color: green;
   width: 100%;
 }
 .own-login-btn-view{

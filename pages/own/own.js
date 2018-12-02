@@ -28,7 +28,10 @@ Page({
       offset: 0,
       hasNest: true,
       loaded: false
-    }
+    },
+    msgLoading: false,
+    faveLoading: false,
+    flushBtnDisabled: false
   },
 
   /**
@@ -96,7 +99,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    
   },
 
   /**
@@ -130,8 +133,27 @@ Page({
           logined: true,
           userInfo: app.globalData.userInfo
         })
+        this.setData({
+          fave: {
+            pics: [],
+            pictures: [],
+            picIds: [],
+            page: 1,
+            totalPage: 1,
+            loaded: false
+          },
+          msg: {
+            list: [],
+            offset: 0,
+            hasNest: true,
+            loaded: false
+          },
+          faveLoading: false,
+          msgLoading: false,
+          flushBtnDisabled: false
+        })
         this.getFavePic(1);
-        this.getMessage(0)
+        this.getMessage(0);
       }, () => {
         this.setData({
           login_btn_txt: '微信登录',
@@ -155,7 +177,7 @@ Page({
     app.confirm('退出', '确定要退出吗？',
       () => {
         wx.showLoading({
-          title: '',
+          title: '退出操作中',
           mask: true
         })
         setTimeout(() => {
@@ -182,7 +204,10 @@ Page({
               offset: 0,
               hasNest: true,
               loaded: false
-            }
+            },
+            faveLoading: false,
+            msgLoading: false,
+            flushBtnDisabled: false
           })
           wx.hideLoading()
         }, 500)
@@ -215,9 +240,11 @@ Page({
   },
 
   getFavePic: function (curPage) {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
+    if (this.data.faveLoading) {
+      return;
+    }
+    this.setData({
+      faveLoading: true
     })
     call.doGet(config.httpUrls.favePics, {
       curPage: curPage
@@ -236,10 +263,14 @@ Page({
               loaded: true
             }
           })
-          wx.hideLoading();
+          this.setData({
+            faveLoading: false
+          })
         }
       }, () => {
-        wx.hideLoading();
+        this.setData({
+          faveLoading: false
+        })
         wx.showToast({
           title: '抱歉服务异常请稍后再试！',
           icon: 'none',
@@ -251,9 +282,11 @@ Page({
   },
 
   getMessage: function (offset) {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
+    if (this.data.msgLoading) {
+      return;
+    }
+    this.setData({
+      msgLoading: true
     })
     call.doGet(config.httpUrls.messageList, {
       offset: offset
@@ -284,10 +317,14 @@ Page({
               }
             })
           }
-          wx.hideLoading();
+          this.setData({
+            msgLoading: false
+          })
         }
       }, () => {
-        wx.hideLoading();
+        this.setData({
+          msgLoading: false
+        })
         wx.showToast({
           title: '抱歉服务异常请稍后再试！',
           icon: 'none',
@@ -324,7 +361,7 @@ Page({
           picId: this.data.fave.pics[index].id
         }, data => {
           wx.hideLoading()
-          if (data.code == 200) {
+          if (data.code == config.httpStatus.OK) {
             wx.showToast({
               title: '操作成功',
               duration: 2000
@@ -355,5 +392,25 @@ Page({
 
   bindTouchEnd: function (e) {
     this.endTime = e.timeStamp;
+  },
+
+  flushMsg: function (e) {
+    if (this.data.msgLoading) {
+      return;
+    }
+    this.setData({
+      msg: {
+        list: [],
+        offset: 0,
+        hasNest: true,
+        loaded: false
+      },
+      msgLoading: false,
+      flushBtnDisabled: true
+    })
+    this.getMessage(0);
+    this.setData({
+      flushBtnDisabled: false
+    })
   }
 })

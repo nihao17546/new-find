@@ -1,4 +1,4 @@
-const basePath = 'http://192.168.0.103:8080';
+const basePath = 'https://www.appcnd.com/find';
 const httpUrls = {
   login: basePath + '/user/login',
   auth: basePath + '/user/auth',
@@ -10,7 +10,9 @@ const httpUrls = {
   favePics: basePath + '/image/fave',
   rmFavo: basePath + '/user/rmFavo',
   insertFavo: basePath + '/user/favo',
-  messageList: basePath + '/message/list'
+  messageList: basePath + '/message/list',
+  share: basePath + '/user/share',
+  faceResultOne: basePath + '/face/result/one'
 }
 const staticResources = {
   play_head_img: 'http://activity.appcnd.com/paly.jpg'

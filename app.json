@@ -4,7 +4,8 @@
     "pages/play/play",
     "pages/own/own",
     "pages/face/face",
-    "pages/look/look"
+    "pages/look/look",
+    "pages/shareFace/shareFace"
   ],
   "window":{
     "backgroundTextStyle":"light",

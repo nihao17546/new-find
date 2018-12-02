@@ -48,6 +48,13 @@
                   <text space="emsp">创建于 </text>{{item.createdAt}}</view>
               </view>
             </view>
+            <view class="weui-loadmore" hidden="{{!faveLoading}}">
+              <view class="weui-loading"></view>
+              <view class="weui-loadmore__tips">正在加载</view>
+            </view>
+            <view class="weui-loadmore weui-loadmore_line" hidden="{{fave.page < fave.totalPage}}">
+              <view class="weui-loadmore__tips weui-loadmore__tips_in-line">我是有底线的</view>
+            </view>
           </view>
           <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
             <view class="weui-panel weui-panel_access">
@@ -68,6 +75,16 @@
                   </view>
                 </view>
               </view>
+            </view>
+            <view class="weui-loadmore" hidden="{{!msgLoading}}">
+              <view class="weui-loading"></view>
+              <view class="weui-loadmore__tips">正在加载</view>
+            </view>
+            <view class="weui-loadmore weui-loadmore_line" hidden="{{msg.hasNest}}">
+              <view class="weui-loadmore__tips weui-loadmore__tips_in-line">我也是有底线的</view>
+            </view>
+            <view class="flush-btn" type='primary' disabled="{{flushBtnDisabled}}" bindtap="flushMsg">
+              <image src='../../images/flush.jpg'></image>
             </view>
           </view>
         </view>

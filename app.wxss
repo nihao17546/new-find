@@ -10,3 +10,21 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+.flush-btn{
+  position: fixed;
+  bottom: 12px;
+  right: 9px;
+  width: 35px;
+  height: 35px;
+  padding: 0px;
+  margin: 0px;
+  background-color: green;
+  border-radius: 50px;
+}
+.flush-btn image{
+  width: 35px;
+  height: 35px;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 50px;
+}

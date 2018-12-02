@@ -12,6 +12,7 @@
         </view>
       </view>
     </view>
+    <button class="share" hidden="{{faces.length == 0}}" open-type="share">炫耀一下</button>
   </view>
   <view class='page__bd face-head btn-view'>
     <button type="primary" open-type="getUserInfo" lang="zh_CN" class="weui-btn face-head-btn" bindgetuserinfo="chooseFacePic" size="mini">{{btnHtml}}</button>

@@ -1,4 +1,5 @@
 const config = require('../../utils/config.js');
+const call = require("../../utils/request.js");
 const app = getApp();
 var ctx = "";
 Page({
@@ -7,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    defaultPic: 'http://mydata.appcnd.com/tou.png',
+    defaultPic: '../../images/face.jpg',
     btnHtml: '上传人脸照片',
     windowWidth: '',
     windowHeight: '',
@@ -16,7 +17,10 @@ Page({
     image_show_width: '',
     image_left: '',
     image_top: '',
-    faces: []
+    faces: [],
+    faceUrl: '',
+    shareMsg: '',
+    faceResultId: 0
   },
 
   /**
@@ -75,7 +79,10 @@ Page({
    */
   onUnload: function() {
     this.setData({
-      faces: []
+      faces: [],
+      faceUrl: '',
+      shareMsg: '',
+      faceResultId: 0
     })
   },
 
@@ -93,13 +100,6 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
-
   chooseFacePic: function(e) {
     wx.showLoading({
       title: '处理中',
@@ -113,7 +113,10 @@ Page({
           sourceType: ['album', 'camera'],
           success: res=>{
             this.setData({
-              faces: []
+              faces: [],
+              faceUrl: '',
+              shareMsg: '',
+              faceResultId: 0
             })
             wx.uploadFile({
               url: config.httpUrls.face,
@@ -123,15 +126,18 @@ Page({
                 token: app.globalData.userInfo.token
               },
               success: resUpload => {
-                if (resUpload.statusCode != 200) {
+                if (resUpload.statusCode != config.httpStatus.OK) {
                   wx.hideLoading()
                   app.alert('服务异常', '抱歉服务异常，请稍后再试！')
                 } else {
                   let response = JSON.parse(resUpload.data);
-                  if (response.code == 200) {
+                  if (response.code == config.httpStatus.OK) {
                     this.drawPic(response.response, res.tempFilePaths[0]);
                     this.setData({
-                      faces: response.response.faces
+                      faces: response.response.faces,
+                      faceUrl: res.tempFilePaths[0],
+                      shareMsg: response.response.shareMsg,
+                      faceResultId: response.response.faceResultId
                     })
                     wx.hideLoading()
                   }
@@ -219,5 +225,42 @@ Page({
       app.alert('糟糕','该照片中未识别出人物头像!');
     }
     ctx.draw();
+  },
+
+  onShareAppMessage: function (res) {
+    let title = 'FIND';
+    let path = "/pages/play/play";
+    let imageUrl = this.data.defaultPic;
+    if (res.from == 'button') {
+      title = this.data.shareMsg == '' ? 'FIND' : this.data.shareMsg;
+      path = "/pages/shareFace/shareFace?faceResultId=" + this.data.faceResultId + "&faceUrl=" + this.data.faceUrl;
+      imageUrl = this.data.faceUrl == '' ? this.data.defaultPic : this.data.faceUrl;
+    }
+    return {
+      title: title,
+      path: path,
+      imageUrl: imageUrl,
+      success: resA=> {
+        if (res.from == 'button') {
+          call.doGet(config.httpUrls.share, {
+            faceResultId: this.data.faceResultId
+          },
+            data => {
+              if (data.code == config.httpStatus.OK) {
+                wx.showToast({
+                  title: data.message,
+                  duration: 2000
+                })
+              }
+            }, () => {
+
+            }, {
+              token: app.globalData.userInfo.token
+            });
+        }
+      },
+      fail: resA => {
+      }
+    }
   }
 })

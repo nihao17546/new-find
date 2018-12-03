@@ -38,7 +38,7 @@
           <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
             <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{fave.pics}}" wx:key="item">
               <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" data-index="{{index}}" bindtap="showFavePic" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd">
-                <image class="weui-media-box__thumb" src="{{item.compressSrc}}" />
+                <image class="weui-media-box__thumb" mode="aspectFill" src="{{item.compressSrc}}" />
               </view>
               <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                 <view class="weui-media-box__title">{{item.title}}</view>

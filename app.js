@@ -85,11 +85,12 @@ App({
                       }
                     })
                   } else {
-                    wx.showToast({
-                      title: '获取授权信息失败',
-                      icon: 'none',
-                      duration: 1500
-                    })
+                    console.error('获取授权信息失败')
+                    // wx.showToast({
+                    //   title: '获取授权信息失败',
+                    //   icon: 'none',
+                    //   duration: 1500
+                    // })
                     if (failFun) {
                       failFun()
                     }

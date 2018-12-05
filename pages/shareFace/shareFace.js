@@ -43,6 +43,10 @@ Page({
               result: data.response,
               faceUrl: data.response.face.faceUrl
             })
+            let image_height = data.response.face.height / data.response.face.width * this.data.image_show_width;
+            this.setData({
+              canvasHeight: image_height
+            })
           }
           else {
             wx.showModal({

@@ -74,13 +74,13 @@ Page({
   },
 
   toLook: function () {
-    // wx.showToast({
-    //   title: '该功能即将上线，尽请期待！',
-    //   icon: 'none',
-    //   duration: 1000
-    // })
-    wx.navigateTo({
-      url: '/pages/shareFace/shareFace?faceResultId=57'
+    wx.showToast({
+      title: '该功能即将上线，尽请期待！',
+      icon: 'none',
+      duration: 1000
     })
+    // wx.navigateTo({
+    //   url: '/pages/shareFace/shareFace?faceResultId=62'
+    // })
   }
 })

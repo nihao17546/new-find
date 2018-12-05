@@ -12,7 +12,7 @@
   </view>
   <view class='page__bd face-head'>
     <!-- <canvas canvas-id='myCanvas' class='face-head-view' style='width:{{canvasWidth}}px;height:{{canvasHeight}}px'></canvas> -->
-    <image src="{{faceUrl}}" class='face-head-view'></image>
+    <image src="{{faceUrl}}" style='width:{{image_show_width}}px;height:{{canvasHeight}}px'></image>
   </view>
   <view class='page__bd result-view' hidden="{{!result || !result.face || !result.face.faces || result.face.faces.length == 0}}">
     <view class="weui-panel weui-panel_access">

@@ -3,6 +3,7 @@
 }
 
 .face-head-view {
+  width: 90%;
   border: 0px solid gray;
 }
 

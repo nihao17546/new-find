@@ -1,4 +1,4 @@
-const basePath = 'https://www.appcnd.com/find';
+const basePath = 'http://192.168.129.250:9090/find';
 const httpUrls = {
   login: basePath + '/user/login',
   auth: basePath + '/user/auth',

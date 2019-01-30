@@ -228,15 +228,15 @@ Page({
   },
 
   onPageScroll: function (e) {
-    if (e.scrollTop >= 100) {
-      this.setData({
-        navbar_position: 'fixed'
-      })
-    } else {
-      this.setData({
-        navbar_position: ''
-      })
-    }
+    // if (e.scrollTop >= 100) {
+    //   this.setData({
+    //     navbar_position: 'fixed'
+    //   })
+    // } else {
+    //   this.setData({
+    //     navbar_position: ''
+    //   })
+    // }
   },
 
   getFavePic: function (curPage) {

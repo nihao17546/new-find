@@ -57,3 +57,6 @@
 .search-context-content-view{
   margin-top: 5px;
 }
+.view-add{
+  margin-top: 50px;
+}

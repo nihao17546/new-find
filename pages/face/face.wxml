@@ -17,4 +17,7 @@
   <view class='page__bd face-head btn-view'>
     <button type="primary" open-type="getUserInfo" lang="zh_CN" class="weui-btn face-head-btn" bindgetuserinfo="chooseFacePic" size="mini">{{btnHtml}}</button>
   </view>
+
+  <ad unit-id="adunit-3c4724ad1eb8fd0f" class="view-add"></ad>
+
 </view>

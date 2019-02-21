@@ -1,5 +1,70 @@
 <view class="page">
   <view class='page__bd look-head'>
-    <image src='../../images/face.jpg' style='width:{{image_width}}px;height:{{image_height}}px;' mode='aspectFit'></image>
+    <image src='{{img_path}}' style='width:{{image_width}}px;height:{{image_height}}px;' mode='aspectFit' bindtap="showPic"></image>
+  </view>
+
+  <view class='page__bd look-head btn-view' hidden='{{whenLook}}'>
+    <button type="primary" open-type="getUserInfo" lang="zh_CN" class="weui-btn face-head-btn" bindgetuserinfo="chooseLookPic" size="mini">{{add_btn_text}}</button>
+  </view>
+
+  <view class='page__bd look-head btn-view' hidden='{{!whenLook}}'>
+    <form bindsubmit="add_word">
+      <input class="input" value="{{word_value}}" name="word" class="word_input" placeholder-class="word_input_p" placeholder="在这里输入要添加的文字" type="text" />
+
+      <view class="classname">
+        <view class="cc">选择字体颜色:</view>
+        <radio-group name="color">
+          <label class="checkbox">
+            <radio value="#000000" checked="true" />
+            <text style="color: #000000;">黑色</text>,
+            <radio value="#DC143C" />
+            <text style="color: #DC143C;">红色</text>,
+            <radio value="#FFFFFF" />
+            <text style="color: #FFFFFF;">白色</text>
+          </label>
+        </radio-group>
+
+        <view class="cc">选择文字所在位置:</view>
+        <radio-group name="pos">
+          <label class="checkbox">
+            <radio value="2" />
+            <text>上</text>,
+            <radio value="5" checked="true" />
+            <text>中</text>,
+            <radio value="8" />
+            <text>下</text>,
+            <radio value="4" />
+            <text>左</text>,
+            <radio value="6" />
+            <text>右</text>
+          </label>
+        </radio-group>
+
+        <view class="cc">选择字体大小:</view>
+        <radio-group name="size">
+          <label class="checkbox">
+            <radio value="28" />
+            <text>小</text>,
+            <radio value="38" checked="true" />
+            <text>中</text>,
+            <radio value="50" />
+            <text>大</text>
+          </label>
+        </radio-group>
+
+        <view class="cc">选择字体模式:</view>
+        <radio-group name="type">
+          <label class="checkbox">
+            <radio value="1" checked="true" />
+            <text>正常文字</text>,
+            <radio value="0" />
+            <text>文字跳动</text>
+          </label>
+        </radio-group>
+      </view>
+
+      <button class="btn" type="primary" form-type="submit">点击生成表情</button>
+      <button class="btn" bindtap="cancel">取消</button>
+    </form>
   </view>
 </view>

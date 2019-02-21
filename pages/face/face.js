@@ -236,79 +236,70 @@ Page({
       path = "/pages/shareFace/shareFace?faceResultId=" + this.data.faceResultId;
       imageUrl = this.data.faceUrl == '' ? this.data.defaultPic : this.data.faceUrl;
     }
+    if (res.from == 'button') {
+      wx.showLoading({
+        title: '处理中',
+        mask: true
+      })
+      wx.canvasToTempFilePath({
+        x: this.data.image_left,
+        y: this.data.image_top,
+        width: this.data.image_show_width,
+        height: this.data.canvasHeight,
+        destWidth: this.data.image_show_width,
+        destHeight: this.data.canvasHeight,
+        canvasId: 'myCanvas',
+        success: resP => {
+          // 上传分享的图片
+          wx.uploadFile({
+            url: config.httpUrls.share,
+            filePath: resP.tempFilePath,
+            name: 'file',
+            formData: {
+              faceResultId: this.data.faceResultId
+            },
+            header: {
+              token: app.globalData.userInfo.token
+            },
+            success: resUpload => {
+              if (resUpload.statusCode != config.httpStatus.OK) {
+                wx.hideLoading()
+                app.alert('服务异常', '抱歉服务异常，请稍后再试！')
+              } else {
+                let response = JSON.parse(resUpload.data);
+                if (response.code == config.httpStatus.OK) {
+                  console.log(response.response)
+                  wx.hideLoading()
+                }
+                else {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: response.message,
+                    icon: 'none',
+                    duration: 3000
+                  })
+                }
+              }
+            },
+            fail: resUpload => {
+              wx.hideLoading()
+              app.alert('服务异常', '抱歉服务异常，异常信息:' + resUpload.errMsg)
+            }
+          })
+        },
+        fail: () => {
+          wx.showToast({
+            title: '抱歉服务异常，请稍后再试',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      })
+    }
     return {
       title: title,
       path: path,
-      imageUrl: imageUrl,
-      success: resA => {
-        if (res.from == 'button') {
-          wx.showLoading({
-            title: '处理中',
-            mask: true
-          })
-          wx.canvasToTempFilePath({
-            x: this.data.image_left,
-            y: this.data.image_top,
-            width: this.data.image_show_width,
-            height: this.data.canvasHeight,
-            destWidth: this.data.image_show_width,
-            destHeight: this.data.canvasHeight,
-            canvasId: 'myCanvas',
-            success: resP => {
-              // 上传分享的图片
-              wx.uploadFile({
-                url: config.httpUrls.share,
-                filePath: resP.tempFilePath,
-                name: 'file',
-                formData: {
-                  faceResultId: this.data.faceResultId
-                },
-                header: {
-                  token: app.globalData.userInfo.token
-                },
-                success: resUpload => {
-                  if (resUpload.statusCode != config.httpStatus.OK) {
-                    wx.hideLoading()
-                    app.alert('服务异常', '抱歉服务异常，请稍后再试！')
-                  } else {
-                    let response = JSON.parse(resUpload.data);
-                    if (response.code == config.httpStatus.OK) {
-                      console.log(response.response)
-                      wx.hideLoading()
-                    }
-                    else {
-                      wx.hideLoading()
-                      wx.showToast({
-                        title: response.message,
-                        icon: 'none',
-                        duration: 3000
-                      })
-                    }
-                  }
-                },
-                fail: resUpload => {
-                  wx.hideLoading()
-                  app.alert('服务异常', '抱歉服务异常，异常信息:' + resUpload.errMsg)
-                }
-              })
-            },
-            fail: () => {
-              wx.showToast({
-                title: '抱歉服务异常，请稍后再试',
-                icon: 'none',
-                duration: 3000
-              })
-            }
-          })
-        }
-      },
-      fail: resA => {
-        wx.showToast({
-          title: '抱歉分享失败，请稍后再试',
-          icon: 'none',
-          duration: 3000
-        })
-      }
+      imageUrl: imageUrl
     }
   }
 })

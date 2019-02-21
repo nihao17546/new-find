@@ -1,3 +1,38 @@
 .look-head {
   text-align: center;
 }
+.btn-view {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.input{
+  font-size: 12px;
+}
+.word_input{
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: 26px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+.classname{
+  padding: 3px;
+  border-radius: 5px;
+  margin-top: 5px;
+  background-color: gray;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+.cc{
+  text-align: left;
+  font-size: 12px;
+}
+.btn{
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
